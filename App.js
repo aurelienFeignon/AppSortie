@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from "./components/Login";
+import ListEvent from "./components/ListEvent";
+import Styles from "./utile/Styles";
+import configureStore from "./store/configureStore";
+import {Provider} from "react-redux";
+import {ToastProvider} from "react-native-fast-toast";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+ const App=()=> {
+
+     const store= configureStore();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Provider store={store}>
+          <ToastProvider>
+              <NavigationContainer>
+                  <Stack.Navigator>
+                      <Stack.Screen
+                          name="Login"
+                          component={Login}
+                          options={{ title: 'Login' }}
+                      />
+                      <Stack.Screen name="ListEvent" component={ListEvent} />
+                  </Stack.Navigator>
+              </NavigationContainer>
+          </ToastProvider>
+      </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
+export default App;
