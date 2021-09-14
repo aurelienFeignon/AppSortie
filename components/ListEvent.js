@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from "react";
 import {FlatList, Text, View} from "react-native";
 import Axios from "axios";
 import ElemListEvent from "./ElemListEvent";
+import { FloatingAction } from "react-native-floating-action";
 
 class ListEvent extends Component{
 
@@ -11,6 +12,14 @@ class ListEvent extends Component{
             data:[]
         }
     }
+
+// <FloatingAction
+// actions={{text: "add Event",
+//     name:"add_event"}}
+// onPressItem={()=>{
+//     props.navigation.navigate('AddEvent');
+// }
+// }/>
 
     componentDidMount() {
         const axios= Axios.create({
@@ -27,14 +36,19 @@ class ListEvent extends Component{
 
     }
 
-   renderItem2= ({item})=>(<ElemListEvent key={parseInt(item.key)} event={item}/>);
+   renderItem2= ({item})=>(<ElemListEvent event={item}/>);
 
     render() {
         const {data}= this.state;
 
         return(
             <View>
-                <FlatList data={data} renderItem={this.renderItem2}/>
+                <FlatList
+                    data={data}
+                    renderItem={this.renderItem2}
+                    keyExtractor={(item,index) => index.toString()}
+                />
+
             </View>
         )
     }

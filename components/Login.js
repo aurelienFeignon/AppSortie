@@ -58,7 +58,7 @@ const Login=(props)=>{
                     let {user, actions} = props;
                     user = response.data;
                     actions.loginAction(user);
-                    props.navigation.navigate('ListEvent');
+                    props.navigation.navigate('NavigationPrincipal');
                 }
             })
             .catch(error=>{
