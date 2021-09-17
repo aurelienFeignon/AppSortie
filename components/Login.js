@@ -4,8 +4,9 @@ import Styles from "../utile/Styles";
 import Axios from "axios";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import loginAction from "../actions/loginAction";
 import {useToast} from "react-native-fast-toast";
+import * as SecureStore from 'expo-secure-store';
+import LoginAction from "../actions/LoginAction";
 
 
 
@@ -32,7 +33,6 @@ const Login=(props)=>{
     },[validEmail, disabled, mdp]);
 
     const onBlurMail=()=>{
-        // regexEmail.test(email)?isValidEmail(true):isValidEmail(false);
         if (regexEmail.test(email)){
             isValidEmail(true);
         }else {
@@ -48,6 +48,8 @@ const Login=(props)=>{
         }
     }
 
+
+
     const onClickButton=()=>{
         console.log(email);
         console.log(mdp)
@@ -57,7 +59,8 @@ const Login=(props)=>{
                 if(response.status===200) {
                     let {user, actions} = props;
                     user = response.data;
-                    actions.loginAction(user);
+                    actions.LoginAction(user,user.apiToken);
+                    SecureStore.setItemAsync('userToken',user.apiToken).then(r=>console.log(r));
                     props.navigation.navigate('NavigationPrincipal');
                 }
             })
@@ -105,7 +108,7 @@ const mapStateToProps = state => ({
 });
 
 const ActionCreators = {
-    loginAction: loginAction
+    LoginAction: LoginAction
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -113,4 +116,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
+
+// export default Login;
 
