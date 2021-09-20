@@ -12,7 +12,6 @@ import LoginAction from "../actions/LoginAction";
 
 const Login=(props)=>{
     const toast = useToast()
-    const {user} = props;
     const [email, onChangeEmail]= useState('');
     const [mdp, onChangeMdp]= useState('');
     const [validEmail, isValidEmail]= useState(true);
@@ -57,11 +56,12 @@ const Login=(props)=>{
             JSON.stringify({email:email, password:mdp}))
             .then((response)=>{
                 if(response.status===200) {
-                    let {user, actions} = props;
+                    let {user, actions, isSignout} = props;
                     user = response.data;
                     actions.LoginAction(user,user.apiToken);
-                    SecureStore.setItemAsync('userToken',user.apiToken).then(r=>console.log(r));
-                    props.navigation.navigate('NavigationPrincipal');
+                    SecureStore.setItemAsync('userToken',user.apiToken).then();
+                    props.navigation.goBack();
+
                 }
             })
             .catch(error=>{
@@ -104,7 +104,8 @@ const Login=(props)=>{
 }
 
 const mapStateToProps = state => ({
-    user: state.user,
+    user: state.login.user,
+    isSignout: state.login.isSignout,
 });
 
 const ActionCreators = {
@@ -117,5 +118,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
-// export default Login;
 

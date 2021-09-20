@@ -4,10 +4,11 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import ListEvent from "./ListEvent";
 import AddEvent from "./AddEvent";
 import {useBackHandler} from "@react-native-community/hooks";
-import { CommonActions } from '@react-navigation/native';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Logout from "./Logout";
 
 const stack = createNativeStackNavigator();
-
+const Drawer= createDrawerNavigator();
 
 
 
@@ -18,15 +19,17 @@ const NavigationPrincipal= (props)=>{
         return true;
     })
 
+
+
         return(
-            <stack.Navigator screenOptions={{
-                headerShown: false,
-                headerBackVisible:false}} >
-                <stack.Screen name="ListEvent" component={ListEvent}
-                 options={{headerBackVisible:false,
-                            headerShown:false}}/>
-                <stack.Screen name="AddEvent" component={AddEvent} />
-            </stack.Navigator>
+                <Drawer.Navigator initialRouteName={"ListEvent"}>
+                    <Drawer.Screen name="ListEvent" component={ListEvent}
+                     options={{headerBackVisible:false,
+                                headerShown:false}}/>
+                    <Drawer.Screen name="AddEvent" component={AddEvent} />
+                    <Drawer.Screen name="Logout" component={Logout} />
+                </Drawer.Navigator>
+
         );
     }
 
