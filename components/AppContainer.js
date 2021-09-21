@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {} from "react-native";
 import LoginAction from "../actions/LoginAction";
 import {bindActionCreators} from "redux";
@@ -14,7 +14,8 @@ const Stack = createNativeStackNavigator();
 
 const AppContainer= (props)=>{
 
-    let {isSignout, user}= props;
+    const {isSignout, user}= props;
+    const [isLogin, setIsLogin]= useState(false);
 
     const axios= Axios.create({
         baseURL:'https://sheltered-crag-17970.herokuapp.com/api/',
@@ -26,15 +27,21 @@ const AppContainer= (props)=>{
         let userToken;
         SecureStore.getItemAsync('userToken').then(r=>{
             userToken=r;
+            console.log("userToken "+userToken)
             if (userToken){
                 axios.post('participant/recoverUserWithApiToken',JSON.stringify({apiToken:userToken}))
                     .then(r=>{
                         LoginAction(r.data,r.data.apiToken);
-                        console.log('test2' + isSignout)
+                        console.log('test2 ' + props.isSignout);
                     })
             }
         });
-    },[isSignout]);
+    },[]);
+
+    useEffect(()=>{
+        console.log('testUseEffect ' +isSignout);
+        isSignout? setIsLogin(false): setIsLogin(true);
+    },[props.isSignout]);
 
     return(
         <NavigationContainer>
@@ -48,7 +55,7 @@ const AppContainer= (props)=>{
                         fontWeight: 'bold',
                     },
                 }}>
-                {isSignout ?(
+                {!isLogin ?(
                     <Stack.Screen
                         name="Login"
                         component={Login}
@@ -67,8 +74,8 @@ const AppContainer= (props)=>{
 
 const mapStateToProps= (state)=>{
     return {
-        isSignout: state.login.isLoading,
-        user: state.login.isLoading,
+        isSignout: state.isSignout,
+        user: state.user,
     }
 }
 

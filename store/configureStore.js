@@ -1,12 +1,11 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import loginReducer from "../reducer/loginReducer";
+import logger from 'redux-logger';
+import {} from "react-native";
 
-const rootReducer= combineReducers(
-    {login: loginReducer},
-);
 
 const configureStore=()=>{
-    return createStore(rootReducer);
+    return createStore(loginReducer, applyMiddleware(logger));
 }
 
 export default configureStore;

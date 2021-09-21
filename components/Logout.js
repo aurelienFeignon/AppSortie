@@ -13,7 +13,7 @@ const Logout= (props)=>{
 
     const onPressLogout=()=>{
         actions.LogoutAction();
-        SecureStore.setItemAsync('userToken', '')
+        SecureStore.setItemAsync('userToken', '').then();
     }
 
     return (

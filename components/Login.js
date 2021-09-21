@@ -56,12 +56,9 @@ const Login=(props)=>{
             JSON.stringify({email:email, password:mdp}))
             .then((response)=>{
                 if(response.status===200) {
-                    let {user, actions, isSignout} = props;
-                    user = response.data;
-                    actions.LoginAction(user,user.apiToken);
+                    let user = response.data;
+                    props.actions.LoginAction(user,user.apiToken);
                     SecureStore.setItemAsync('userToken',user.apiToken).then();
-                    props.navigation.goBack();
-
                 }
             })
             .catch(error=>{
@@ -104,8 +101,8 @@ const Login=(props)=>{
 }
 
 const mapStateToProps = state => ({
-    user: state.login.user,
-    isSignout: state.login.isSignout,
+    user: state.user,
+    isSignout: state.isSignout,
 });
 
 const ActionCreators = {

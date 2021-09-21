@@ -10,12 +10,15 @@ const initialState={
 const loginReducer= (state= initialState, action)=>{
     switch (action.type){
         case LOGIN:
-            return {
+            console.log("loginReducer "+JSON.stringify(state))
+            let test= {
                 ...state,
                 user: action.user,
                 userToken: action.userToken,
                 isSignout: false,
             };
+            console.log("loginReducer 2 "+JSON.stringify(test.isSignout));
+            return test;
         case LOGOUT:
             return {
                 ...state,
