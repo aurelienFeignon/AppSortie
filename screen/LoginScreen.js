@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, TextInput, Button, ToastAndroid, Image, Dimensions} from "react-native";
+import {View, TextInput, Button, Image, Dimensions} from "react-native";
 import Styles from "../utile/Styles";
 import Axios from "axios";
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ const LoginScreen=(props)=>{
     const [validEmail, isValidEmail]= useState(true);
     const [inputStyle, setInputStyle]= useState(Styles.validInput);
     const [disabled, isDisabled]= useState(true);
-    const {width}= Dimensions.get('window');
+    const {width, height}= Dimensions.get('window');
 
     const regexEmail=/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 
@@ -75,36 +75,58 @@ const LoginScreen=(props)=>{
             });
     }
 
-
     return(
-        <View style={Styles.container}>
-            <View style={{width: width*0.7}}>
-                <Image
-                source={require('../assets/logo-getout.png')}
-                style={{width: "100%",
-                        height: "100%",
-                        resizeMode:"contain"}}/>
-            </View>
-            <TextInput
-            style={inputStyle}
-            onChangeText={text=>onChangeEmail(text)}
-            onBlur={onBlurMail}
-            value={email}
-            placeholder="Your Email"
-            keyboardType="email-address"
-            />
-            <TextInput
-            style={Styles.validInput}
-            onChangeText={text=>onChangeMdp(text)}
-            value={mdp}
-            placeholder="Your Password"
-            secureTextEntry={true}
-            />
-            <Button
-            title="LoginScreen"
-            onPress={onClickButton}
-            disabled={disabled}
-            />
+        <View style={{flex: 1,
+            backgroundColor: '#fff',
+            alignItems: 'center',
+            }}>
+                <View style={{  width: width*0.7,
+                                height:height*0.3,
+                                marginTop:height*0.10,
+                                marginBottom:height*0.1
+                    }}>
+                    <Image  source={require('../assets/logo-getout.png')}
+                            style={{    width: "100%",
+                                        height: "100%",
+                                        resizeMode:"contain"}}/>
+                </View>
+                <View style={{  position:"absolute",
+                                bottom:20,
+                                display:"flex",
+                                justifyContent:"space-between",
+                                height:height*0.4
+
+                            }}>
+                    <TextInput
+                    style={inputStyle}
+                    onChangeText={text=>onChangeEmail(text)}
+                    onBlur={onBlurMail}
+                    value={email}
+                    placeholder="Your Email"
+                    keyboardType="email-address"
+                    />
+                    <TextInput
+                    style={Styles.validInput}
+                    onChangeText={text=>onChangeMdp(text)}
+                    value={mdp}
+                    placeholder="Your Password"
+                    secureTextEntry={true}
+                    />
+                    <Button
+                    title="LoginScreen"
+                    onPress={onClickButton}
+                    disabled={disabled}
+                    />
+                </View>
+                <View style={{  position:"absolute",
+                                height:height*0.6,
+                                bottom:0,
+                                zIndex:-1}}>
+                    <Image source={require('../assets/backgroundLogin.png')}
+                           style={{ height:'100%',
+                                    resizeMode:"contain"
+                           }}/>
+                </View>
         </View>
     )
 }
