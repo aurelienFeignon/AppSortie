@@ -2,7 +2,7 @@ import React from 'react';
 import configureStore from "./store/configureStore";
 import {Provider} from "react-redux";
 import {ToastProvider} from "react-native-fast-toast";
-import AppContainer from "./components/AppContainer";
+import AppContainer from "./navigation/AppContainer";
 
  const App=() => {
 

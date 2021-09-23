@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {} from "react-native";
-import LoginAction from "../actions/LoginAction";
+import LoginAction from "../store/actions/LoginAction";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/lib/connect/connect";
 import Axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import Login from "./Login";
-import NavigationPrincipal from "./NavigationPrincipal";
+import LoginScreen from "../screen/LoginScreen";
+
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import NavigationPrincipal from "./NavigationPrincipal";
 const Stack = createNativeStackNavigator();
 
 
@@ -57,9 +58,10 @@ const AppContainer= (props)=>{
                 }}>
                 {!isLogin ?(
                     <Stack.Screen
-                        name="Login"
-                        component={Login}
-                        options={{title: 'Login'}}
+                        name="LoginScreen"
+                        component={LoginScreen}
+                        options={{headerBackVisible:false,
+                            headerShown:false}}
                     />) : (
                     <Stack.Screen
                         name="NavigationPrincipal"

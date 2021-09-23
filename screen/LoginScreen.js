@@ -1,24 +1,26 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, TextInput, Button, ToastAndroid} from "react-native";
+import {View, Text, TextInput, Button, ToastAndroid, Image, Dimensions} from "react-native";
 import Styles from "../utile/Styles";
 import Axios from "axios";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {useToast} from "react-native-fast-toast";
 import * as SecureStore from 'expo-secure-store';
-import LoginAction from "../actions/LoginAction";
+import LoginAction from "../store/actions/LoginAction";
 
 
 
-const Login=(props)=>{
+const LoginScreen=(props)=>{
     const toast = useToast()
     const [email, onChangeEmail]= useState('');
     const [mdp, onChangeMdp]= useState('');
     const [validEmail, isValidEmail]= useState(true);
     const [inputStyle, setInputStyle]= useState(Styles.validInput);
     const [disabled, isDisabled]= useState(true);
+    const {width}= Dimensions.get('window');
 
     const regexEmail=/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+
     const axios= Axios.create({
         baseURL:'https://sheltered-crag-17970.herokuapp.com/api/',
 
@@ -76,6 +78,13 @@ const Login=(props)=>{
 
     return(
         <View style={Styles.container}>
+            <View style={{width: width*0.7}}>
+                <Image
+                source={require('../assets/logo-getout.png')}
+                style={{width: "100%",
+                        height: "100%",
+                        resizeMode:"contain"}}/>
+            </View>
             <TextInput
             style={inputStyle}
             onChangeText={text=>onChangeEmail(text)}
@@ -92,7 +101,7 @@ const Login=(props)=>{
             secureTextEntry={true}
             />
             <Button
-            title="Login"
+            title="LoginScreen"
             onPress={onClickButton}
             disabled={disabled}
             />
@@ -113,6 +122,6 @@ const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(ActionCreators, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
 
 

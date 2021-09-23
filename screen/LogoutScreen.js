@@ -2,11 +2,11 @@ import React from 'react';
 import {Button, Text, View} from 'react-native'
 import Styles from "../utile/Styles";
 import {bindActionCreators} from "redux";
-import LogoutAction from "../actions/LogoutAction";
+import LogoutAction from "../store/actions/LogoutAction";
 import connect from "react-redux/lib/connect/connect";
 import * as SecureStore from 'expo-secure-store';
 
-const Logout= (props)=>{
+const LogoutScreen= (props)=>{
 
     const {actions, isSignout, user}= props;
 
@@ -20,7 +20,7 @@ const Logout= (props)=>{
         <View style={Styles.container}>
             <Text style={{fontSize:25}}>Are you sure to want logout?
             </Text>
-            <Button title={'Logout'} onPress={onPressLogout}/>
+            <Button title={'LogoutScreen'} onPress={onPressLogout}/>
 
         </View>
     )
@@ -40,4 +40,4 @@ const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(ActionCreators, dispatch),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Logout);
+export default connect(mapStateToProps,mapDispatchToProps)(LogoutScreen);

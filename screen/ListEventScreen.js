@@ -1,10 +1,10 @@
 import React, {Component, useEffect, useState} from "react";
 import {FlatList, Text, View} from "react-native";
 import Axios from "axios";
-import ElemListEvent from "./ElemListEvent";
+import ElemListEvent from "../components/ElemListEvent";
 import { FloatingAction } from "react-native-floating-action";
 
-class ListEvent extends Component{
+class ListEventScreen extends Component{
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class ListEvent extends Component{
 // actions={{text: "add Event",
 //     name:"add_event"}}
 // onPressItem={()=>{
-//     props.navigation.navigate('AddEvent');
+//     props.navigation.navigate('AddEventScreen');
 // }
 // }/>
 
@@ -56,4 +56,4 @@ class ListEvent extends Component{
 
 }
 
-export default ListEvent;
+export default ListEventScreen;
