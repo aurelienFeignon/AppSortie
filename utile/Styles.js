@@ -69,26 +69,44 @@ export default function getStyle(height=0, width=0){
         },
         containerLogo:{
             width: width*0.7,
-            height:height*0.4,
             marginTop:height*0.03,
             marginBottom:height*0.05
 
+        },
+        containerLogoLogin:{
+            height:height*0.4,
+        },
+        containerLogoForgot:{
+            height:height*0.7,
         },
         containerScreen:{
             flex: 1,
             backgroundColor: Color.nightBlue,
             alignItems: 'center',
         },
+        fontSize18:{
+            fontSize:18
+        },
+        fontSize23:{
+            fontSize:23
+        },
         imgResponsive:{
             width: "100%",
             height: "100%",
             resizeMode:"contain"
         },
-        input:{
+        mt15:{
+          marginTop: 15
+        },
+        mv10:{
             marginVertical:10,
         },
         textForgotPassword:{
             color: '#fff',
-        }
+        },
+        textYellowBold:{
+            color: Color.yellow,
+            fontWeight:"bold"
+        },
     }
 }

@@ -1,4 +1,3 @@
-import react from 'react';
 import {Image} from 'react-native';
 import getStyle from "../utile/Styles";
 import React from "react";
