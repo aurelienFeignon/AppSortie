@@ -21,6 +21,7 @@ import Animated, {
     useAnimatedStyle,
     withSpring,
 } from 'react-native-reanimated';
+import Logo from "../components/Logo";
 
 
 
@@ -131,8 +132,7 @@ const LoginScreen=(props)=>{
                 backgroundColor="#fff"
                 barStyle="dark-content"/>
                 <Animated.View style={[styles.containerLogo, animatedLogo]}>
-                    <Image  source={require('../assets/logogetoutapp.png')}
-                            style={styles.imgResponsive}/>
+                    <Logo/>
                 </Animated.View>
                 <Animated.View style={[styles.containerForm, animatedForm]}>
                     <InputOutline

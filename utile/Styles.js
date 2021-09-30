@@ -1,6 +1,6 @@
 import Color from "./Color";
 
-export default function getStyle(height, width){
+export default function getStyle(height=0, width=0){
     return{
         container: {
             flex: 1,
