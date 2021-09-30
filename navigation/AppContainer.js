@@ -10,6 +10,7 @@ import LoginScreen from "../screen/LoginScreen";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import NavigationPrincipal from "./NavigationPrincipal";
+import ForgotPassWordScreen from "../screen/ForgotPassWordScreen";
 const Stack = createNativeStackNavigator();
 
 
@@ -44,6 +45,11 @@ const AppContainer= (props)=>{
         isSignout? setIsLogin(false): setIsLogin(true);
     },[props.isSignout]);
 
+    const options={
+        headerBackVisible:false,
+        headerShown:false
+    }
+
     return(
         <NavigationContainer>
             <Stack.Navigator
@@ -57,12 +63,19 @@ const AppContainer= (props)=>{
                     },
                 }}>
                 {!isLogin ?(
-                    <Stack.Screen
-                        name="LoginScreen"
-                        component={LoginScreen}
-                        options={{headerBackVisible:false,
-                            headerShown:false}}
-                    />) : (
+                    <Stack.Group>
+                        <Stack.Screen
+                            name="LoginScreen"
+                            component={LoginScreen}
+                            options={options}
+                        />
+                        <Stack.Screen
+                            name="ForgotPassWordScreen"
+                            component={ForgotPassWordScreen}
+                            options={options}
+                        />
+                    </Stack.Group>
+                    ) : (
                     <Stack.Screen
                         name="NavigationPrincipal"
                         component={NavigationPrincipal}

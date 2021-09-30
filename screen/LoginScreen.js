@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import {
     View,
-    Image,
     Dimensions,
     TouchableHighlight,
     Text,
@@ -15,14 +14,14 @@ import {useToast} from "react-native-fast-toast";
 import * as SecureStore from 'expo-secure-store';
 import LoginAction from "../store/actions/LoginAction";
 import {InputOutline} from "react-native-input-outline";
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withSpring,
 } from 'react-native-reanimated';
 import Logo from "../components/Logo";
-
+import {iconMail, iconMdp} from "../utile/Icone";
+import {regexEmail} from "../utile/Regex";
 
 
 const LoginScreen=(props)=>{
@@ -35,9 +34,6 @@ const LoginScreen=(props)=>{
     const inputMail= useRef(null);
     const [errorMail, setErrorMail]=useState(undefined);
     const styles= Styles(height,width);
-    const regexEmail=/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-    const iconMail= <Icon name={'person'} size={20} color={"#000000"}/>;
-    const iconMdp= <Icon name={'lock'} size={20} color={"#000000"}/>;
     const axios= Axios.create({
         baseURL:'https://sheltered-crag-17970.herokuapp.com/api/',
 
@@ -76,8 +72,8 @@ const LoginScreen=(props)=>{
     },[]);
 
     useEffect(()=>{
-        if(!validEmail && mdp === ''){
-            isDisabled(true)
+        if(!validEmail || mdp.trim()==='' ){
+            isDisabled(true);
         }else isDisabled(false);
     },[validEmail, disabled, mdp]);
 
@@ -122,7 +118,8 @@ const LoginScreen=(props)=>{
     }
 
     const onPressForgot=()=> {
-        console.log('press')
+        console.log('press');
+        props.navigation.navigate("ForgotPassWordScreen");
     }
 
     return(
@@ -131,7 +128,7 @@ const LoginScreen=(props)=>{
                 <StatusBar
                 backgroundColor="#fff"
                 barStyle="dark-content"/>
-                <Animated.View style={[styles.containerLogo, animatedLogo]}>
+                <Animated.View style={[styles.containerLogo,styles.containerLogoLogin, animatedLogo]}>
                     <Logo/>
                 </Animated.View>
                 <Animated.View style={[styles.containerForm, animatedForm]}>
@@ -144,7 +141,7 @@ const LoginScreen=(props)=>{
                         keyboardType="email-address"
                         onEndEditing={onBlurMail}
                         trailingIcon={()=>iconMail}
-                        style={styles.input}
+                        style={styles.mv10}
                     />
                     <InputOutline
                         onChangeText={text=>onChangeMdp(text)}
@@ -152,7 +149,7 @@ const LoginScreen=(props)=>{
                         placeholder="Your Password"
                         secureTextEntry={true}
                         trailingIcon={()=>iconMdp}
-                        style={styles.input}
+                        style={styles.mv10}
                     />
                     <Text   onPress={onPressForgot}
                             style={styles.textForgotPassword}>
