@@ -19,6 +19,11 @@ import {InputOutline} from "react-native-input-outline";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Color from "../utile/Color";
 import Svg, {Path} from "react-native-svg";
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+} from 'react-native-reanimated';
 
 
 
@@ -41,18 +46,37 @@ const LoginScreen=(props)=>{
     });
 
     useEffect(()=>{
-        const openKeyboard= Keyboard.addListener("keyboardWillShow", () => {
-            console.log("Keyboard Shown");
+        const openKeyboard= Keyboard.addListener("keyboardDidShow", () => {
+            positionLogo.value= withSpring(-75);
+            positionForm.value= withSpring(-165);
+            sizeLogo.value=withSpring(0.69);
         });
         const closeKeyboard= Keyboard.addListener("keyboardDidHide", () => {
-            console.log("Keyboard hide");
+            positionLogo.value=withSpring(0);
+            positionForm.value=withSpring(0);
+            sizeLogo.value=withSpring(1);
         });
-
         return ()=>{
             openKeyboard.remove();
             closeKeyboard.remove();
         }
     },[]);
+
+    const positionLogo= useSharedValue(0);
+    const positionForm= useSharedValue(0)
+    const sizeLogo= useSharedValue(1);
+
+    const animatedLogo= useAnimatedStyle(()=>{
+        return{
+            transform:[{translateY: positionLogo.value,
+                },{scale: sizeLogo.value}],
+        };
+    });
+    const animatedForm= useAnimatedStyle(()=>{
+       return{
+           transform:[{translateY: positionForm.value}]
+       }
+    });
 
     useEffect(()=>{
         if(!validEmail && mdp === ''){
@@ -96,20 +120,26 @@ const LoginScreen=(props)=>{
             });
     }
 
-    const onClickButtonForgetPassword=()=>{
 
+
+    const onClickButtonSignUp=()=>{
+
+    }
+
+    const onPressForgot=()=> {
+        console.log('press')
     }
 
     const styles=StyleSheet.create({
         buttonSubmit:{
             width:'100%',
-            marginTop: 10,
-            paddingVertical:15,
+            marginVertical: 10,
+            paddingVertical:10,
             borderRadius: 50,
             borderWidth: 2,
         },
         buttonEnable:{
-            backgroundColor: Color.yellow,
+            backgroundColor: Color.blueGrey,
             borderColor: Color.nightBlue,
         },
         buttonDisable:{
@@ -126,14 +156,14 @@ const LoginScreen=(props)=>{
             color: Color.yellow,
         },
         buttonSubmitTextEnable:{
-            color: Color.nightBlue
+            color: Color.yellow
         },
         containerForm:{
-            position:"absolute",
+            // position:"absolute",
             bottom:20,
             display:"flex",
             justifyContent:"flex-start",
-            height:height*0.4,
+            height:height*0.5,
             width:'80%',
             marginBottom: 5
         },
@@ -146,9 +176,9 @@ const LoginScreen=(props)=>{
         },
         containerLogo:{
             width: width*0.7,
-            height:height*0.3,
+            height:height*0.4,
             marginTop:height*0.03,
-            marginBottom:height*0.1
+            marginBottom:height*0.05
 
         },
         containerScreen:{
@@ -164,7 +194,13 @@ const LoginScreen=(props)=>{
         input:{
             marginVertical:10,
         },
+        textForgotPassword:{
+            color: '#fff',
+        }
+
     })
+
+
 
 
     return(
@@ -173,11 +209,11 @@ const LoginScreen=(props)=>{
                 <StatusBar
                 backgroundColor="#fff"
                 barStyle="dark-content"/>
-                <View style={styles.containerLogo}>
+                <Animated.View style={[styles.containerLogo, animatedLogo]}>
                     <Image  source={require('../assets/logogetoutapp.png')}
                             style={styles.imgResponsive}/>
-                </View>
-                <View style={styles.containerForm}>
+                </Animated.View>
+                <Animated.View style={[styles.containerForm, animatedForm]}>
                     <InputOutline
                         ref={inputMail}
                         error={errorMail}
@@ -197,6 +233,10 @@ const LoginScreen=(props)=>{
                         trailingIcon={()=>iconMdp}
                         style={styles.input}
                     />
+                    <Text   onPress={onPressForgot}
+                            style={styles.textForgotPassword}>
+                        Forgot password?
+                    </Text>
                     <View>
                     <TouchableHighlight
                         onPress={onClickButtonLogin}
@@ -205,20 +245,20 @@ const LoginScreen=(props)=>{
                         <Text style={[styles.buttonSubmitText, disabled? styles.buttonSubmitTextDisable: styles.buttonSubmitTextEnable]}>Login</Text>
                     </TouchableHighlight>
                         <TouchableHighlight
-                            onPress={onClickButtonForgetPassword}
+                            onPress={onClickButtonSignUp}
                             disabled={disabled}
                             style={[styles.buttonSubmit,  styles.buttonEnable]}>
-                            <Text style={[styles.buttonSubmitText, styles.buttonSubmitTextEnable]}>Forgot Password ?</Text>
+                            <Text style={[styles.buttonSubmitText, styles.buttonSubmitTextEnable]}>Sign up</Text>
                         </TouchableHighlight>
                     </View>
-                </View>
+                </Animated.View>
                 {/*<View>*/}
-                <View style={styles.containerImgBackground}>
-                    <Svg height="100%" width="100%" preserveAspectRatio="none  xMinYMin xMaxYMax meet"  viewBox="100 0 1000 1252.18">
-                        <Path fill={Color.blueGrey}
-                              d="M1125,383.64v868.54H0V43.76C290.36-30.58,612.32-32.4,807,217.05,895.89,330.94,1006.21,378.9,1125,383.64Z"/>
-                    </Svg>
-                </View>
+                {/*<View style={styles.containerImgBackground}>*/}
+                {/*    <Svg height="100%" width="100%" preserveAspectRatio="none  xMinYMin xMaxYMax meet"  viewBox="100 0 1000 1252.18">*/}
+                {/*        <Path fill={Color.blueGrey}*/}
+                {/*              d="M1125,383.64v868.54H0V43.76C290.36-30.58,612.32-32.4,807,217.05,895.89,330.94,1006.21,378.9,1125,383.64Z"/>*/}
+                {/*    </Svg>*/}
+                {/*</View>*/}
         </SafeAreaView>
     )
 
