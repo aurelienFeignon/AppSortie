@@ -8,12 +8,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 const InputPasswordConfirme= (props)=>{
     const inputPassword= useRef(null);
     const inputConfirmPassword= useRef(null);
-    const [password, setPassword]= useState('');
-    const [confirmPassword, setConfirmPassword]= useState('');
     const [invisiblePassword, setInvisiblePassword]= useState(true);
     const [invisibleConfirmPassword, setInvisibleConfimPassword]= useState(true);
-    const [samePassword, setSamePassword]= useState(false);
-    const [errorSamePassword, setErrorSamePassword]= useState(undefined);
     const styles= getStyle();
 
     const onBlurMdp=()=>{
@@ -33,19 +29,9 @@ const InputPasswordConfirme= (props)=>{
             : <Icon name={'visibility'} size={20} color={"#000000"} onPress={onPressIconPassword} />;
     };
 
-    const gestureIconConfir=()=>{
+    const gestureIconConfirm=()=>{
         return invisibleConfirmPassword? <Icon name={'visibility-off'} size={20} color={"#000000"} onPress={onPressIconConfirmPassword} />
             : <Icon name={'visibility'} size={20} color={"#000000"} onPress={onPressIconConfirmPassword} />;
-    };
-
-    const  onBlurConfirmMdp=()=>{
-        if(password!==confirmPassword){
-            setSamePassword(false);
-            setErrorSamePassword("The 2 passwords don't match")
-        }else{
-            setSamePassword(true);
-            setErrorSamePassword(undefined)
-        }
     };
 
 
@@ -53,8 +39,8 @@ const InputPasswordConfirme= (props)=>{
         <View>
             <InputOutline
                 ref={inputPassword}
-                onChangeText={text=>setPassword(text)}
-                value={password}
+                onChangeText={text=>props.setPassword(text)}
+                value={props.password}
                 placeholder="Your password"
                 onEndEditing={onBlurMdp}
                 style={styles.mv10}
@@ -63,14 +49,14 @@ const InputPasswordConfirme= (props)=>{
             />
             <InputOutline
                 ref={inputConfirmPassword}
-                onChangeText={text=>setConfirmPassword(text)}
-                value={confirmPassword}
+                onChangeText={text=>props.setConfirmPassword(text)}
+                value={props.confirmPassword}
                 placeholder="Confirm your password"
-                onEndEditing={onBlurConfirmMdp}
+                onEndEditing={props.onBlurConfirmMdp}
                 style={styles.mv10}
                 secureTextEntry={invisibleConfirmPassword}
-                trailingIcon={gestureIconConfir}
-                error={errorSamePassword}
+                trailingIcon={gestureIconConfirm}
+                error={props.errorSamePassword}
             />
         </View>
     )

@@ -15,6 +15,10 @@ const SignUpUserScreen= ()=>{
     const [validEmail,isValidEmail]= useState(false);
     const inputMail= useRef(null);
     const [errorMail, setErrorMail]=useState(undefined);
+    const [samePassword, setSamePassword]= useState(false);
+    const [errorSamePassword, setErrorSamePassword]= useState(undefined);
+    const [password, setPassword]= useState('');
+    const [confirmPassword, setConfirmPassword]= useState('');
 
     const onBlurMail=()=>{
         if (regexEmail.test(email)){
@@ -25,6 +29,16 @@ const SignUpUserScreen= ()=>{
             setErrorMail("Enter a correct Email");
         }
     }
+
+    const  onBlurConfirmMdp=()=>{
+        if(password!==confirmPassword){
+            setSamePassword(false);
+            setErrorSamePassword("The 2 passwords don't match")
+        }else{
+            setSamePassword(true);
+            setErrorSamePassword(undefined)
+        }
+    };
 
     return (
         <ScrollView contentContainerStyle={{alignItems:"center", backgroundColor:Color.nightBlue}}>
@@ -47,13 +61,21 @@ const SignUpUserScreen= ()=>{
                             trailingIcon={()=>iconMail}
                             style={styles.mv10}
                         />
-                        <InputPasswordConfirme/>
+                        <InputPasswordConfirme
+                            onBlurConfirmMdp={onBlurConfirmMdp}
+                            password={password}
+                            confirmPassword={confirmPassword}
+                            setPassword={setPassword}
+                            setConfirmPassword={setConfirmPassword}
+                            errorSamePassword={errorSamePassword}
+                        />
+
                         <TouchableHighlight
                             // onPress={}
                             disabled={validEmail}
                             style={[styles.buttonSubmit, validEmail? styles.buttonEnable: styles.buttonDisable]}>
                             <Text style={[styles.buttonSubmitText, validEmail? styles.buttonSubmitTextEnable : styles.buttonSubmitTextDisable]}>
-                                Reset password
+                                Sign up
                             </Text>
                         </TouchableHighlight>
                     </View>
