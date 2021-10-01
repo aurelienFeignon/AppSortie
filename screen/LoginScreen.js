@@ -114,11 +114,11 @@ const LoginScreen=(props)=>{
     }
 
     const onClickButtonSignUp=()=>{
-
+        console.log('test');
+        props.navigation.navigate("SignUpUserScreen");
     }
 
     const onPressForgot=()=> {
-        console.log('press');
         props.navigation.navigate("ForgotPassWordScreen");
     }
 
@@ -164,7 +164,6 @@ const LoginScreen=(props)=>{
                     </TouchableHighlight>
                         <TouchableHighlight
                             onPress={onClickButtonSignUp}
-                            disabled={disabled}
                             style={[styles.buttonSubmit,  styles.buttonEnable]}>
                             <Text style={[styles.buttonSubmitText, styles.buttonSubmitTextEnable]}>Sign up</Text>
                         </TouchableHighlight>

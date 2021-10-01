@@ -11,6 +11,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import NavigationPrincipal from "./NavigationPrincipal";
 import ForgotPassWordScreen from "../screen/ForgotPassWordScreen";
+import SignUpUserScreen from "../screen/SignUpUserScreen";
 const Stack = createNativeStackNavigator();
 
 
@@ -74,6 +75,10 @@ const AppContainer= (props)=>{
                             component={ForgotPassWordScreen}
                             options={options}
                         />
+                        <Stack.Screen
+                            name="SignUpUserScreen"
+                            component={SignUpUserScreen}
+                            options={options}/>
                     </Stack.Group>
                     ) : (
                     <Stack.Screen
