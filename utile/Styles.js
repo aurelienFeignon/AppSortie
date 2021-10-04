@@ -51,6 +51,16 @@ export default function getStyle(height=0, width=0){
         buttonSubmitTextEnable:{
             color: Color.yellow
         },
+        containerImgProfilDeleteIcon:{
+            backgroundColor:Color.yellow,
+            position:"absolute",
+            height:25,
+            width:"100%",
+            bottom:0,
+            display:"flex",
+            alignItems: "center",
+            justifyContent:"center"
+        },
         containerForm:{
             // position:"absolute",
             bottom:20,
