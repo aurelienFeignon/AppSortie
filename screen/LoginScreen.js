@@ -114,12 +114,11 @@ const LoginScreen=(props)=>{
     }
 
     const onClickButtonSignUp=()=>{
-        console.log('test');
         props.navigation.navigate("SignUpUserScreen");
     }
 
     const onPressForgot=()=> {
-        props.navigation.navigate("ForgotPassWordScreen");
+        props.navigation.navigate("ForgotPassWordFirstScreen");
     }
 
     return(
