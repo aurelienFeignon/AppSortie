@@ -1,24 +1,23 @@
-import {LOGIN, LOGOUT, RESTORE_TOKEN} from "../constants/constante";
+import {LOGIN, LOGOUT, RESET_PASSWORD, RESTORE_TOKEN} from "../constants/constante";
 
 const initialState={
     user: null,
     isLoading:true,
     isSignout:true,
-    userToken:null
+    userToken:null,
+    email:null,
+    codeReset:null
 };
 
 const loginReducer= (state= initialState, action)=>{
     switch (action.type){
         case LOGIN:
-            console.log("loginReducer "+JSON.stringify(state))
-            let test= {
+            return{
                 ...state,
                 user: action.user,
                 userToken: action.userToken,
                 isSignout: false,
-            };
-            console.log("loginReducer 2 "+JSON.stringify(test.isSignout));
-            return test;
+            }
         case LOGOUT:
             return {
                 ...state,
@@ -31,6 +30,12 @@ const loginReducer= (state= initialState, action)=>{
                 ...state,
                 userToken: action.userToken,
                 isLoading: false
+            }
+        case RESET_PASSWORD:
+            return {
+                ...state,
+                email: action.email,
+                codeReset: action.codeReset
             }
         default:
             return state;
