@@ -11,8 +11,14 @@ import {Picker} from '@react-native-picker/picker';
 import getAxios from "../utile/GetAxios";
 import * as ImagePicker from 'expo-image-picker';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import LoginAction from "../store/actions/LoginAction";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import * as SecureStore from "expo-secure-store";
+import {useToast} from "react-native-fast-toast";
 
 const SignUpUserScreen= ()=>{
+    const toast = useToast()
     const {width, height}= Dimensions.get('window');
     const styles= getStyle(width, height);
     const [email,setEmail]= useState('');
@@ -45,7 +51,6 @@ const SignUpUserScreen= ()=>{
     });
 
     useEffect(()=>{
-        console.log("testUSeEffect")
        if(!validEmail || !samePassword || lastName.trim()==="" || firstName.trim()==="" || userName.trim()===""){
            setDisabled(true)
        }else setDisabled(false);
@@ -116,10 +121,23 @@ const SignUpUserScreen= ()=>{
         }
 
         axios.post("/register/participant", JSON.stringify(bodyRequest))
-            .then((reponse)=>{
-                console.log(reponse)
+            .then((response)=>{
+                if(response.status===201){
+                    let user = response.data;
+                    props.actions.LoginAction(user,user.apiToken);
+                    SecureStore.setItemAsync('userToken',user.apiToken).then();
+                }
             })
-            .catch(reason => console.log(reason))
+            .catch((reason) => {
+                toast.show(reason.error, {
+                    type:"warning",
+                    position:'top',
+                    duration: 4000,
+                    offset: 30,
+                    animationType:'slide-in'
+                });
+
+            })
 
     }
 
@@ -224,5 +242,12 @@ const SignUpUserScreen= ()=>{
 
 }
 
+const ActionCreators = {
+    LoginAction: LoginAction
+};
 
-export default SignUpUserScreen;
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(ActionCreators, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(SignUpUserScreen);
