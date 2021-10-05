@@ -10,8 +10,9 @@ import LoginScreen from "../screen/LoginScreen";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import NavigationPrincipal from "./NavigationPrincipal";
-import ForgotPassWordScreen from "../screen/ForgotPassWordScreen";
+import ForgotPassWordFirstScreen from "../screen/ForgotPassWordFirstScreen";
 import SignUpUserScreen from "../screen/SignUpUserScreen";
+import ForgotPassWordSecondScreen from "../screen/ForgotPassWordSecondScreen";
 const Stack = createNativeStackNavigator();
 
 
@@ -71,8 +72,13 @@ const AppContainer= (props)=>{
                             options={options}
                         />
                         <Stack.Screen
-                            name="ForgotPassWordScreen"
-                            component={ForgotPassWordScreen}
+                            name="ForgotPassWordFirstScreen"
+                            component={ForgotPassWordFirstScreen}
+                            options={options}
+                        />
+                        <Stack.Screen
+                            name="ForgotPassWordSecondScreen"
+                            component={ForgotPassWordSecondScreen}
                             options={options}
                         />
                         <Stack.Screen
