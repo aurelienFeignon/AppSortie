@@ -116,7 +116,8 @@ export default function getStyle(height=0, width=0){
         },
         textYellowBold:{
             color: Color.yellow,
-            fontWeight:"bold"
+            fontWeight:"bold",
+            textAlign: "center"
         },
     }
 }
